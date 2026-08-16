@@ -25,8 +25,10 @@ class AIService:
                 }
             ]
 
+            # listenin sonuna gecmisi tek tek ekliyor
             messages.extend(gecmis)
             
+            # yeni mesajı ekleme
             messages.append({
                 "role": "user",
                 "content": mesaj

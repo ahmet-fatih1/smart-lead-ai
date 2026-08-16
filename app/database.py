@@ -12,6 +12,7 @@ def init_db(app):
     with app.app_context():
         db = get_db()
 
+        # CREATE TABLE IF NOT EXISTS tablo yoksa oluştur varsa dokunma
         db.execute("""
             CREATE TABLE IF NOT EXISTS leads (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,8 +23,8 @@ def init_db(app):
             )
         """)
 
-    db.commit()
-    db.close()
+        db.commit()
+        db.close()
 
 
 # Yeni kayıt ekler
@@ -49,6 +50,7 @@ def lead_ekle(isim, telefon, mesaj):
 def tum_leadler():
     db = get_db()
     
+    # Leadleri en büyükten en küçüğe doğru sıralama yapar
     cursor = db.execute(
         """
         SELECT id, isim, telefon, mesaj, tarih
@@ -57,10 +59,12 @@ def tum_leadler():
         """
     )
     
+    #  SQL'den gelen satirları satirlar değişkenine ata.
     satirlar = cursor.fetchall()
     
     leadler = []
     
+    # SQL satırlarını dict'e çevirme işlemi yapılıyor.
     for satir in satirlar:
         leadler.append({
             "id": satir[0],
